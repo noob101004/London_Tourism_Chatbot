@@ -279,48 +279,70 @@
     </footer>
 
     <script>
-        // Function to handle example questions
+        // Function to simulate user questions
         function askExample(element) {
             const question = element.textContent;
             const dfMessenger = document.querySelector('df-messenger');
             
-            // Wait for the df-messenger to be fully initialized
+            // Delay to ensure df-messenger is fully loaded
             setTimeout(() => {
                 try {
-                    const messenger = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
-                    const userInput = messenger.shadowRoot.querySelector('df-messenger-user-input');
+                    const chatInterface = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
+                    const userInputField = chatInterface.shadowRoot.querySelector('df-messenger-user-input');
                     
-                    // Set the value and dispatch an input event
-                    const input = userInput.shadowRoot.querySelector('input');
-                    input.value = question;
-                    input.dispatchEvent(new Event('input', { bubbles: true }));
+                    // Populate the input field and trigger the input event
+                    const inputElement = userInputField.shadowRoot.querySelector('input');
+                    inputElement.value = question;
+                    inputElement.dispatchEvent(new Event('input', { bubbles: true }));
                     
-                    // Send the message
-                    const sendButton = userInput.shadowRoot.querySelector('button');
+                    // Trigger the send button
+                    const sendButton = userInputField.shadowRoot.querySelector('button');
                     sendButton.click();
                 } catch (error) {
-                    console.error("Error sending example question:", error);
-                    alert("Could not send example question. Please try clicking the chat icon first.");
+                    console.error("Error in sending example question:", error);
+                    alert("Error: Please open the chat icon before trying again.");
                 }
             }, 1000);
         }
         
-        // Initialize the chat interface
-        document.addEventListener('DOMContentLoaded', function() {
-            // Open Dialogflow Messenger automatically after a delay
+        // Initialize the chat interface upon page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Automatically open the Dialogflow Messenger
             setTimeout(() => {
                 try {
                     const dfMessenger = document.querySelector('df-messenger');
-                    const messageIcon = dfMessenger.shadowRoot.querySelector('df-messenger-chat-bubble button');
-                    if (messageIcon) {
-                        // Uncomment the line below if you want the chat to open automatically
-                        // messageIcon.click();
+                    const chatButton = dfMessenger.shadowRoot.querySelector('df-messenger-chat-bubble button');
+                    if (chatButton) {
+                        // Uncomment below to auto-open chat
+                        // chatButton.click();
                     }
                 } catch (error) {
-                    console.error("Error initializing chat:", error);
+                    console.error("Error in initializing chat:", error);
                 }
             }, 2000);
         });
     </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoH4UYqPp9FaJzLQg50gE-sF-wgsJ2W0A&libraries=visualization"></script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 13,
+                center: { lat: 51.5074, lng: -0.1278 }, // Coordinates of London
+                mapTypeId: 'satellite'
+            });
+    
+            var heatmapData = [
+                new google.maps.LatLng(51.5085, -0.1257),
+                new google.maps.LatLng(51.5094, -0.1182)
+            ];
+    
+            var heatmap = new google.maps.visualization.HeatmapLayer({
+                data: heatmapData,
+                map: map
+            });
+        }
+    </script>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    
 </body>
 </html>
