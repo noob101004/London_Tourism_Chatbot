@@ -184,12 +184,24 @@
     <!-- Dialogflow Messenger integration -->
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger
-    chat-icon="https:&#x2F;&#x2F;drive.google.com&#x2F;uc?export=view&ampid=1VsoSncOJ78o9WZ9maLqN0MwDVpA9NNgO"
-    chat-title="London_Tourism_chatbot"
-    agent-id="19787e79-c4bb-4fd5-bdff-85dedd2de68d"
-    language-code="en"
-    ></df-messenger>
-</head>
+        chat-icon="https://drive.google.com/uc?export=view&id=1VsoSncOJ78o9WZ9maLqN0MwDVpA9NNgO"
+        chat-title="London_Tourism_chatbot"
+        agent-id="19787e79-c4bb-4fd5-bdff-85dedd2de68d"
+        language-code="en">
+    </df-messenger>
+    <script>
+        window.onload = function() {
+            const dfMessenger = document.querySelector('df-messenger');
+            dfMessenger.renderCustomText("Hello! I'm your AI assistant for exploring London. How can I help you today?");
+        };
+    </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@300;400;500;700&display=swap">
 <body>
     <header>
         <h1>London Travel Guide</h1>
