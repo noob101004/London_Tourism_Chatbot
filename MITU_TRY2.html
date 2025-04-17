@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ultimate London Travel Guide & Chatbot 🇬🇧</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary-color: #1d3557;
+      --secondary-color: #457b9d;
+      --accent-color: #e63946;
+      --background-light: #f1faee;
+      --text-color: #293241;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--background-light);
+      color: var(--text-color);
+    }
+
+    header {
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                  url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      padding: 120px 20px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 4rem;
+      margin: 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .subtitle {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-top: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-section {
+      background: white;
+      padding: 3rem 0;
+      margin: 2rem 0;
+      border-radius: 20px;
+    }
+
+    .btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      margin: 5px;
+    }
+
+    .btn:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    .example-questions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin: 1.5rem 0;
+    }
+
+    .weather-widget {
+      background: linear-gradient(135deg, #00b4db, #0083b0);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+
+    .currency-converter {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .currency-converter input,
+    .currency-converter select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .attractions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 2rem;
+    }
+
+    .attraction-card {
+      position: relative;
+      height: 250px;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .attraction-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .attraction-card:hover img {
+      transform: scale(1.1);
+    }
+
+    .attraction-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 15px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: white;
+    }
+
+    #mapid {
+      height: 500px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 3rem 0;
+      margin-top: 3rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+    }
+
+    .notification-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent-color);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 1000;
+    }
+
+    .loading-animation {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .map-controls {
+      margin-bottom: 1rem;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .map-legend {
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .attraction-popup {
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .attraction-popup img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    .attraction-popup .live-info {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 5px;
+    }
+
+    .attraction-popup .wait-time {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .real-time-info {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .info-card {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .info-card h4 {
+      margin: 0 0 10px 0;
+      color: var(--primary-color);
+    }
+
+    .tube-line {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .tube-line .status {
+      margin-left: 10px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    .status.good {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .status.delayed {
+      background: #FFC107;
+      color: black;
+    }
+
+    .status.disrupted {
+      background: #F44336;
+      color: white;
+    }
+
+    .tripadvisor-rating {
+      background: #00af87;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      display: inline-block;
+    }
+  </style>
+  <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+</head>
+<body>
+  <header>
+    <div class="hero-content">
+      <h1>🌆 London Explorer</h1>
+      <p class="subtitle">Your AI-Powered Guide to the City</p>
+      <button class="btn" onclick="scrollToSection('features')">Start Exploring</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <section id="features" class="feature-section">
+      <h2>🎯 Quick Access</h2>
+      <div class="example-questions">
+        <button class="btn" onclick="askExample('What are the top 5 must-visit attractions in London?')">Top Attractions</button>
+        <button class="btn" onclick="askExample('How much is an Oyster card and where can I buy it?')">Transport Guide</button>
+        <button class="btn" onclick="askExample('What\'s the weather like in London today?')">Weather Update</button>
+        <button class="btn" onclick="askExample('Best afternoon tea spots in London?')">Food & Dining</button>
+        <button class="btn" onclick="askExample('Free things to do in London this weekend')">Free Activities</button>
+        <button class="btn" onclick="askExample('Hidden gems in London')">Hidden Gems</button>
+        <button class="btn" onclick="askExample('Best photo spots in London')">Photo Spots</button>
+        <button class="btn" onclick="askExample('London nightlife guide')">Nightlife</button>
+      </div>
+    </section>
+
+    <div class="grid-container">
+      <div class="card">
+        <h3>🌦️ Live Weather</h3>
+        <div class="weather-widget">
+          <div id="weather-info">
+            <h4>Current London Weather</h4>
+            <button class="btn" onclick="getWeather()">
+              <span id="weather-loading" class="loading-animation" style="display: none;"></span>
+              <span id="weather-text">Check Weather</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>💷 Currency Converter</h3>
+        <div class="currency-converter">
+          <input type="number" id="amount" placeholder="Amount" class="form-control">
+          <select id="from-currency" class="form-control">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+          </select>
+          <button class="btn" onclick="convertCurrency()">Convert to GBP</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🎫 Quick Tips</h3>
+        <ul>
+          <li>Get an Oyster card for public transport</li>
+          <li>Book attractions online to save money</li>
+          <li>Many museums are free to enter</li>
+          <li>Download CityMapper app</li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="feature-section">
+      <h2>📍 Interactive London Map</h2>
+      <div class="map-controls">
+        <button class="btn" onclick="toggleMapLayer('tube')">🚇 Tube Status</button>
+        <button class="btn" onclick="toggleMapLayer('traffic')">🚗 Live Traffic</button>
+        <button class="btn" onclick="toggleMapLayer('crowds')">👥 Crowd Levels</button>
+        <button class="btn" onclick="toggleMapLayer('restaurants')">🍽️ Restaurants</button>
+        <button class="btn" onclick="toggleMapLayer('hotels')">🏨 Hotels</button>
+        <button class="btn" onclick="centerMap()">🎯 Center Map</button>
+      </div>
+      <div class="map-legend">
+        <div class="legend-item">
+          <span class="legend-dot" style="background: #4CAF50;"></span> Low Activity
+          <span class="legend-dot" style="background: #FFC107;"></span> Moderate
+          <span class="legend-dot" style="background: #F44336;"></span> Busy
+        </div>
+      </div>
+      <div class="real-time-info">
+        <div class="info-card weather-brief">
+          <h4>🌤️ Weather</h4>
+          <div id="weather-brief-content">Loading...</div>
+        </div>
+        <div class="info-card transport-brief">
+          <h4>🚇 Tube Status</h4>
+          <div id="tube-brief-content">Loading...</div>
+        </div>
+        <div class="info-card events-brief">
+          <h4>🎭 Today's Events</h4>
+          <div id="events-brief-content">Loading...</div>
+        </div>
+      </div>
+      <div id="mapid"></div>
+    </section>
+
+    <section class="feature-section">
+      <h2>📊 London at a Glance</h2>
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-number" id="visitors-count">19.6M</div>
+          <p>Annual Visitors</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">270+</div>
+          <p>Underground Stations</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3,000+</div>
+          <p>Parks and Green Spaces</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">170+</div>
+          <p>Museums</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-section">
+      <h2>📸 Must-Visit Attractions</h2>
+      <div class="attractions-grid">
+        <div class="attraction-card" onclick="showAttractionDetails('Tower Bridge')">
+          <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad" alt="Tower Bridge">
+          <div class="attraction-info">
+            <h4>Tower Bridge</h4>
+            <p>London's iconic bridge</p>
+          </div>
+        </div>
+        <div class="attraction-card" onclick="showAttractionDetails('London Eye')">
+          <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad" alt="London Eye">
+          <div class="attraction-info">
+            <h4>London Eye</h4>
+            <p>Best views of the city</p>
+          </div>
+        </div>
+        <div class="attraction-card" onclick="showAttractionDetails('Big Ben')">
+          <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad" alt="Big Ben">
+          <div class="attraction-info">
+            <h4>Big Ben</h4>
+            <p>Historic clocktower</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <df-messenger
+    chat-icon="https://drive.google.com/uc?export=view&id=1VsoSncOJ78o9WZ9maLqN0MwDVpA9NNgO"
+    chat-title="London Guide Assistant"
+    agent-id="19787e79-c4bb-4fd5-bdff-85dedd2de68d"
+    language-code="en"
+  ></df-messenger>
+
+  <div class="notification-badge" id="notification">
+    <span id="notification-text"></span>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        <h3>London Travel Guide</h3>
+        <p>Your ultimate companion for exploring London</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact Us</h4>
+        <p>Email: info@londontravelguide.com</p>
+        <p>Phone: +44 20 1234 5678</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Enhanced askExample function with loading state
+    function askExample(question) {
+      const dfMessenger = document.querySelector("df-messenger");
+      showNotification("Sending your question...");
+      setTimeout(() => {
+        try {
+          const messenger = dfMessenger.shadowRoot.querySelector("df-messenger-chat");
+          const userInput = messenger.shadowRoot.querySelector("df-messenger-user-input");
+          const input = userInput.shadowRoot.querySelector("input");
+          input.value = question;
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+          const sendButton = userInput.shadowRoot.querySelector("button");
+          sendButton.click();
+        } catch (err) {
+          showNotification("❌ Couldn't send message. Please try again.");
+        }
+      }, 1000);
+    }
+
+    // Enhanced weather function with loading state and detailed information
+    async function getWeather() {
+      const loadingSpinner = document.getElementById('weather-loading');
+      const weatherText = document.getElementById('weather-text');
+      loadingSpinner.style.display = 'inline-block';
+      weatherText.style.display = 'none';
+
+      const API_KEY = "c6a1a88292591e7ab44a1f43d43a3774";
+      try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&appid=${API_KEY}`);
+        const data = await response.json();
+        
+        const temp = Math.round(data.main.temp);
+        const desc = data.weather[0].description;
+        const feels = Math.round(data.main.feels_like);
+        const humidity = data.main.humidity;
+        const wind = data.wind.speed;
+        const sunrise = new Date(data.sys.sunrise * 1000).toLocaleTimeString();
+        const sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString();
+
+        Swal.fire({
+          title: '🌤️ London Weather',
+          html: `
+            <div style="text-align: left">
+              <p><b>🌡️ Temperature:</b> ${temp}°C (feels like ${feels}°C)</p>
+              <p><b>☁️ Condition:</b> ${desc}</p>
+              <p><b>💧 Humidity:</b> ${humidity}%</p>
+              <p><b>💨 Wind Speed:</b> ${wind} m/s</p>
+              <p><b>🌅 Sunrise:</b> ${sunrise}</p>
+              <p><b>🌇 Sunset:</b> ${sunset}</p>
+            </div>
+          `,
+          icon: 'info',
+          confirmButtonText: 'Got it!',
+          confirmButtonColor: '#1d3557'
+        });
+      } catch (error) {
+        showNotification("❌ Couldn't fetch weather data. Please try again later.");
+      } finally {
+        loadingSpinner.style.display = 'none';
+        weatherText.style.display = 'inline';
+      }
+    }
+
+    // Enhanced currency converter with loading state and more options
+    async function convertCurrency() {
+      const amount = document.getElementById('amount').value;
+      const fromCurrency = document.getElementById('from-currency').value;
+      
+      if (!amount) {
+        showNotification("Please enter an amount to convert");
+        return;
+      }
+
+      showNotification("Converting currency...");
+      
+      try {
+        const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
+        const data = await response.json();
+        const rate = data.rates.GBP;
+        const result = (amount * rate).toFixed(2);
+        
+        Swal.fire({
+          title: '💷 Currency Conversion',
+          html: `
+            <div style="text-align: center">
+              <h3>${amount} ${fromCurrency} = ${result} GBP</h3>
+              <p>Exchange rate: 1 ${fromCurrency} = ${rate.toFixed(4)} GBP</p>
+              <p><small>Last updated: ${new Date().toLocaleString()}</small></p>
+            </div>
+          `,
+          icon: 'success',
+          confirmButtonColor: '#1d3557'
+        });
+      } catch (error) {
+        showNotification("❌ Couldn't convert currency. Please try again later.");
+      }
+    }
+
+    // Enhanced tube station data
+    const tubeStations = [
+      { name: 'Westminster', lat: 51.5014, lng: -0.1246, lines: ['Circle', 'District', 'Jubilee'] },
+      { name: 'London Bridge', lat: 51.5055, lng: -0.0754, lines: ['Northern', 'Jubilee'] },
+      { name: 'Liverpool Street', lat: 51.5178, lng: -0.0817, lines: ['Central', 'Circle', 'Hammersmith & City', 'Metropolitan'] },
+      { name: 'King\'s Cross St. Pancras', lat: 51.5308, lng: -0.1238, lines: ['Circle', 'Piccadilly', 'Victoria', 'Northern', 'Metropolitan', 'Hammersmith & City'] },
+      { name: 'Oxford Circus', lat: 51.5152, lng: -0.1415, lines: ['Bakerloo', 'Central', 'Victoria'] },
+      { name: 'Piccadilly Circus', lat: 51.5098, lng: -0.1342, lines: ['Bakerloo', 'Piccadilly'] },
+      { name: 'Victoria', lat: 51.4965, lng: -0.1447, lines: ['Victoria', 'Circle', 'District'] },
+      { name: 'Baker Street', lat: 51.5226, lng: -0.1571, lines: ['Bakerloo', 'Circle', 'Hammersmith & City', 'Jubilee', 'Metropolitan'] },
+      { name: 'Waterloo', lat: 51.5036, lng: -0.1143, lines: ['Bakerloo', 'Jubilee', 'Northern', 'Waterloo & City'] },
+      { name: 'Bank', lat: 51.5133, lng: -0.0886, lines: ['Central', 'Northern', 'Waterloo & City', 'DLR'] }
+    ];
+
+    // Initialize map with enhanced features
+    const map = L.map('mapid').setView([51.5074, -0.1278], 12);
+    let currentMapLayer = 'default';
+    let trafficLayer, tubeLayer, crowdsLayer, restaurantsLayer, hotelsLayer;
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const places = [
+      { 
+        name: 'Tower Bridge',
+        lat: 51.5055,
+        lng: -0.0754,
+        type: 'landmark',
+        description: 'Iconic Victorian bridge',
+        image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad',
+        waitTime: '15-20',
+        openNow: true,
+        price: '£10.60',
+        bestTime: '9:00 AM'
+      },
+      {
+        name: 'London Eye',
+        lat: 51.5033,
+        lng: -0.1195,
+        type: 'attraction',
+        description: 'Giant observation wheel',
+        image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad',
+        waitTime: '45-60',
+        openNow: true,
+        price: '£32.50',
+        bestTime: '10:00 AM'
+      },
+      {
+        name: 'Big Ben',
+        lat: 51.5007,
+        lng: -0.1246,
+        type: 'landmark',
+        description: 'Famous clock tower',
+        image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad',
+        waitTime: '5-10',
+        openNow: true,
+        price: 'Free',
+        bestTime: 'Anytime'
+      },
+      {
+        name: 'Buckingham Palace',
+        lat: 51.5014,
+        lng: -0.1419,
+        type: 'landmark',
+        description: 'Royal residence',
+        image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad',
+        waitTime: '30-40',
+        openNow: true,
+        price: '£30.00',
+        bestTime: '11:00 AM'
+      }
+    ];
+
+    // Add places markers with enhanced popups
+    places.forEach(place => {
+      const marker = L.marker([place.lat, place.lng]).addTo(map);
+      
+      // Create enhanced popup content
+      const popupContent = `
+        <div class="attraction-popup">
+          <img src="${place.image}" alt="${place.name}">
+          <h3>${place.name}</h3>
+          <p>${place.description}</p>
+          <div class="live-info">
+            <p>⏰ Wait Time: <span class="wait-time">${place.waitTime} mins</span></p>
+            <p>🎫 Entry: ${place.price}</p>
+            <p>✨ Best Time: ${place.bestTime}</p>
+            <p>📍 Status: ${place.openNow ? '🟢 Open Now' : '🔴 Closed'}</p>
+          </div>
+          <button class="btn" onclick="showAttractionDetails('${place.name}')">
+            Learn More
+          </button>
+        </div>
+      `;
+      
+      marker.bindPopup(popupContent);
+    });
+
+    // Enhanced tube status function with real tube lines
+    function showTubeStatus() {
+      tubeLayer = L.layerGroup().addTo(map);
+      
+      tubeStations.forEach(station => {
+        // Random status for demonstration (replace with real TfL API data)
+        const status = Math.random() > 0.8 ? 'Busy' : 'Normal';
+        const color = status === 'Normal' ? '#4CAF50' : '#F44336';
+        
+        const marker = L.circleMarker([station.lat, station.lng], {
+          radius: 8,
+          fillColor: color,
+          color: '#fff',
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.8
+        });
+
+        const popupContent = `
+          <div class="station-popup">
+            <h3>${station.name}</h3>
+            <p><b>Lines:</b></p>
+            ${station.lines.map(line => `
+              <div class="tube-line">
+                <span>${line}</span>
+                <span class="status ${Math.random() > 0.8 ? 'delayed' : 'good'}">
+                  ${Math.random() > 0.8 ? 'Minor Delays' : 'Good Service'}
+                </span>
+              </div>
+            `).join('')}
+            <p><b>Current Status:</b> ${status}</p>
+          </div>
+        `;
+
+        marker.bindPopup(popupContent);
+        marker.addTo(tubeLayer);
+      });
+
+      // Update the brief info
+      updateTubeBrief();
+    }
+
+    // Function to update tube status brief
+    function updateTubeBrief() {
+      const tubeBrief = document.getElementById('tube-brief-content');
+      const lines = ['Victoria', 'Central', 'Piccadilly', 'Northern'];
+      let content = '';
+      
+      lines.forEach(line => {
+        const status = Math.random() > 0.8 ? 'Minor Delays' : 'Good Service';
+        content += `
+          <div class="tube-line">
+            <span>${line}</span>
+            <span class="status ${status === 'Good Service' ? 'good' : 'delayed'}">${status}</span>
+          </div>
+        `;
+      });
+      
+      tubeBrief.innerHTML = content;
+    }
+
+    // Function to update weather brief
+    async function updateWeatherBrief() {
+      const weatherBrief = document.getElementById('weather-brief-content');
+      const API_KEY = "c6a1a88292591e7ab44a1f43d43a3774";
+      
+      try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&appid=${API_KEY}`);
+        const data = await response.json();
+        
+        weatherBrief.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <h3>${Math.round(data.main.temp)}°C</h3>
+              <p>${data.weather[0].description}</p>
+            </div>
+            <div>
+              <p>💧 ${data.main.humidity}%</p>
+              <p>💨 ${data.wind.speed}m/s</p>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        weatherBrief.innerHTML = 'Weather data unavailable';
+      }
+    }
+
+    // Function to show restaurants (using TripAdvisor data simulation)
+    function showRestaurants() {
+      restaurantsLayer = L.layerGroup().addTo(map);
+      
+      const restaurants = [
+        { name: "Gordon Ramsay Restaurant", lat: 51.5032, lng: -0.1916, rating: 4.5, cuisine: "British", price: "££££" },
+        { name: "Sketch", lat: 51.5129, lng: -0.1411, rating: 4.7, cuisine: "French", price: "££££" },
+        { name: "Duck & Waffle", lat: 51.5162, lng: -0.0807, rating: 4.3, cuisine: "British", price: "£££" },
+        // Add more restaurants...
+      ];
+
+      restaurants.forEach(restaurant => {
+        const marker = L.marker([restaurant.lat, restaurant.lng], {
+          icon: L.divIcon({
+            className: 'restaurant-marker',
+            html: '🍽️',
+            iconSize: [24, 24]
+          })
+        });
+
+        const popupContent = `
+          <div class="restaurant-popup">
+            <h3>${restaurant.name}</h3>
+            <p><span class="tripadvisor-rating">★ ${restaurant.rating}</span></p>
+            <p>Cuisine: ${restaurant.cuisine}</p>
+            <p>Price Range: ${restaurant.price}</p>
+            <button class="btn" onclick="askExample('Tell me about ${restaurant.name} restaurant')">
+              More Info
+            </button>
+          </div>
+        `;
+
+        marker.bindPopup(popupContent);
+        marker.addTo(restaurantsLayer);
+      });
+    }
+
+    // Function to toggle map layers
+    function toggleMapLayer(layer) {
+      // Remove current layers
+      [trafficLayer, tubeLayer, crowdsLayer, restaurantsLayer, hotelsLayer].forEach(l => {
+        if (l) map.removeLayer(l);
+      });
+
+      currentMapLayer = layer;
+
+      switch(layer) {
+        case 'traffic':
+          showTrafficLayer();
+          break;
+        case 'tube':
+          showTubeStatus();
+          break;
+        case 'crowds':
+          showCrowdLevels();
+          break;
+        case 'restaurants':
+          showRestaurants();
+          break;
+        case 'hotels':
+          showHotels();
+          break;
+      }
+    }
+
+    // Function to show hotels
+    function showHotels() {
+      hotelsLayer = L.layerGroup().addTo(map);
+      
+      const hotels = [
+        { name: "The Ritz London", lat: 51.5068, lng: -0.1419, rating: 4.8, price: "££££" },
+        { name: "The Savoy", lat: 51.5108, lng: -0.1198, rating: 4.7, price: "££££" },
+        { name: "Shangri-La The Shard", lat: 51.5045, lng: -0.0865, rating: 4.6, price: "££££" },
+        // Add more hotels...
+      ];
+
+      hotels.forEach(hotel => {
+        const marker = L.marker([hotel.lat, hotel.lng], {
+          icon: L.divIcon({
+            className: 'hotel-marker',
+            html: '🏨',
+            iconSize: [24, 24]
+          })
+        });
+
+        const popupContent = `
+          <div class="hotel-popup">
+            <h3>${hotel.name}</h3>
+            <p><span class="tripadvisor-rating">★ ${hotel.rating}</span></p>
+            <p>Price Range: ${hotel.price}</p>
+            <button class="btn" onclick="askExample('Tell me about ${hotel.name}')">
+              More Info
+            </button>
+          </div>
+        `;
+
+        marker.bindPopup(popupContent);
+        marker.addTo(hotelsLayer);
+      });
+    }
+
+    // Initialize real-time information
+    function initializeRealTimeInfo() {
+      updateWeatherBrief();
+      updateTubeBrief();
+      
+      // Update every 5 minutes
+      setInterval(() => {
+        updateWeatherBrief();
+        updateTubeBrief();
+      }, 300000);
+    }
+
+    // Call initialization when page loads
+    document.addEventListener('DOMContentLoaded', initializeRealTimeInfo);
+
+    // Function to show crowd levels
+    function showCrowdLevels() {
+      crowdsLayer = L.layerGroup().addTo(map);
+      
+      places.forEach(place => {
+        const radius = 50; // meters
+        const crowdLevel = Math.random(); // Simulate random crowd levels
+        
+        const color = crowdLevel > 0.7 ? '#F44336' : 
+                     crowdLevel > 0.4 ? '#FFC107' : '#4CAF50';
+        
+        L.circle([place.lat, place.lng], {
+          radius: radius,
+          fillColor: color,
+          fillOpacity: 0.3,
+          color: color,
+          weight: 1
+        })
+        .bindTooltip(`${place.name}<br>Crowd Level: ${Math.round(crowdLevel * 100)}%`)
+        .addTo(crowdsLayer);
+      });
+    }
+
+    // Center map function
+    function centerMap() {
+      map.setView([51.5074, -0.1278], 12);
+    }
+
+    // Enhanced attraction details with direct Dialogflow integration
+    function showAttractionDetails(attraction) {
+      const place = places.find(p => p.name === attraction);
+      
+      Swal.fire({
+        title: attraction,
+        html: `
+          <div style="text-align: left">
+            <img src="${place.image}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;">
+            <p><b>🎫 Entry:</b> ${place.price}</p>
+            <p><b>⏰ Current Wait Time:</b> ${place.waitTime} minutes</p>
+            <p><b>✨ Best Time to Visit:</b> ${place.bestTime}</p>
+            <p><b>📍 Status:</b> ${place.openNow ? '🟢 Open Now' : '🔴 Closed'}</p>
+            <hr>
+            <p>What would you like to know?</p>
+            <div style="display: grid; gap: 10px; margin-top: 15px;">
+              <button onclick="askSpecificQuestion('${attraction}', 'history')" class="btn">📚 History</button>
+              <button onclick="askSpecificQuestion('${attraction}', 'tickets')" class="btn">🎟️ Ticket Info</button>
+              <button onclick="askSpecificQuestion('${attraction}', 'directions')" class="btn">🗺️ Directions</button>
+              <button onclick="askSpecificQuestion('${attraction}', 'tips')" class="btn">💡 Visitor Tips</button>
+            </div>
+          </div>
+        `,
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonText: 'Close',
+        width: 600
+      });
+    }
+
+    // Function to ask specific questions about attractions
+    function askSpecificQuestion(attraction, topic) {
+      let question = '';
+      switch(topic) {
+        case 'history':
+          question = `Tell me about the history of ${attraction}`;
+          break;
+        case 'tickets':
+          question = `How can I buy tickets for ${attraction}? What are the prices?`;
+          break;
+        case 'directions':
+          question = `How do I get to ${attraction} using public transport?`;
+          break;
+        case 'tips':
+          question = `What are the best tips for visiting ${attraction}?`;
+          break;
+      }
+      
+      askExample(question);
+      Swal.close();
+    }
+
+    // Enhanced notification system with auto-hide
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notification-text');
+      notificationText.textContent = message;
+      notification.style.display = 'block';
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 3000);
+    }
+
+    // Smooth scroll function
+    function scrollToSection(sectionId) {
+      document.getElementById(sectionId).scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+    }
+
+    // Enhanced visitor counter animation with easing
+    function animateVisitorCount() {
+      const counter = document.getElementById('visitors-count');
+      let count = 0;
+      const target = 19.6;
+      const duration = 2000;
+      const step = target / (duration / 16);
+      
+      const timer = setInterval(() => {
+        count += step;
+        if (count >= target) {
+          clearInterval(timer);
+          counter.textContent = target + 'M';
+        } else {
+          counter.textContent = count.toFixed(1) + 'M';
+        }
+      }, 16);
+    }
+
+    // Initialize animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (entry.target.id === 'visitors-count') {
+            animateVisitorCount();
+          }
+        }
+      });
+    });
+
+    observer.observe(document.getElementById('visitors-count'));
+  </script>
+</body>
+</html> 
+
