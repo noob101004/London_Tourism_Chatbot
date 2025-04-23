@@ -366,6 +366,180 @@
       font-size: 12px;
       display: inline-block;
     }
+
+    .weather-brief {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+
+    .weather-brief h4 {
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .weather-content {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .weather-temp {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .weather-icon {
+      font-size: 3rem;
+      margin-right: 15px;
+    }
+
+    .weather-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    .weather-detail {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-small {
+      padding: 8px 15px;
+      font-size: 0.9rem;
+    }
+
+    .weather-location {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .weather-time {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+
+    .weather-alert {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tips-container {
+      display: grid;
+      gap: 15px;
+    }
+
+    .tip-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.03);
+    }
+
+    .tip-item i {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      padding-top: 5px;
+    }
+
+    .tip-item strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .tip-item p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .conversion-history {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      max-height: 100px;
+      overflow-y: auto;
+    }
+
+    .conversion-item {
+      padding: 5px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .live-insights {
+      background: white;
+      border-radius: 10px;
+    }
+
+    .insight-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 8px 15px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .insight-content {
+      padding: 15px;
+      background: rgba(0,0,0,0.02);
+      border-radius: 8px;
+    }
+
+    .map-marker {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 30px;
+      color: white;
+      font-size: 16px;
+    }
+
+    .hotel-marker {
+      background: #4CAF50;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    }
+
+    .restaurant-marker {
+      background: #FF5722;
+      box-shadow: 0 0 10px rgba(255, 87, 34, 0.5);
+    }
+
+    .attraction-marker {
+      background: #2196F3;
+      box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+    }
   </style>
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
 </head>
@@ -417,19 +591,76 @@
             <option value="JPY">JPY - Japanese Yen</option>
             <option value="AUD">AUD - Australian Dollar</option>
             <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="NZD">NZD - New Zealand Dollar</option>
+            <option value="SEK">SEK - Swedish Krona</option>
+            <option value="KRW">KRW - South Korean Won</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+            <option value="NOK">NOK - Norwegian Krone</option>
+            <option value="MXN">MXN - Mexican Peso</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="RUB">RUB - Russian Ruble</option>
+            <option value="ZAR">ZAR - South African Rand</option>
+            <option value="TRY">TRY - Turkish Lira</option>
+            <option value="BRL">BRL - Brazilian Real</option>
+            <option value="TWD">TWD - Taiwan Dollar</option>
+            <option value="DKK">DKK - Danish Krone</option>
+            <option value="PLN">PLN - Polish Złoty</option>
+            <option value="THB">THB - Thai Baht</option>
+            <option value="IDR">IDR - Indonesian Rupiah</option>
+            <option value="HUF">HUF - Hungarian Forint</option>
           </select>
           <button class="btn" onclick="convertCurrency()">Convert to GBP</button>
+          <div id="conversion-history" class="conversion-history"></div>
         </div>
       </div>
 
       <div class="card">
-        <h3>🎫 Quick Tips</h3>
-        <ul>
-          <li>Get an Oyster card for public transport</li>
-          <li>Book attractions online to save money</li>
-          <li>Many museums are free to enter</li>
-          <li>Download CityMapper app</li>
-        </ul>
+        <h3>🎫 Essential Tips</h3>
+        <div class="tips-container">
+          <div class="tip-item">
+            <i class="fas fa-subway"></i>
+            <div>
+              <strong>Transport Smart Card</strong>
+              <p>Get an Oyster card or use contactless payment. Daily cap applies for best value.</p>
+            </div>
+          </div>
+          <div class="tip-item">
+            <i class="fas fa-clock"></i>
+            <div>
+              <strong>Museum Timings</strong>
+              <p>Most museums are free and less crowded during weekday mornings.</p>
+            </div>
+          </div>
+          <div class="tip-item">
+            <i class="fas fa-mobile-alt"></i>
+            <div>
+              <strong>Essential Apps</strong>
+              <p>Download Citymapper for navigation and TfL Go for tube updates.</p>
+            </div>
+          </div>
+          <div class="tip-item">
+            <i class="fas fa-umbrella"></i>
+            <div>
+              <strong>Weather Ready</strong>
+              <p>Always carry a compact umbrella, London weather can be unpredictable.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📊 Live Insights</h3>
+        <div id="live-insights" class="live-insights">
+          <div class="insight-tabs">
+            <button class="tab-btn active" onclick="showInsight('crowd')">👥 Crowd Levels</button>
+            <button class="tab-btn" onclick="showInsight('satisfaction')">⭐ Ratings</button>
+            <button class="tab-btn" onclick="showInsight('prices')">💰 Price Trends</button>
+          </div>
+          <div id="insight-content" class="insight-content">Loading insights...</div>
+        </div>
       </div>
     </div>
 
@@ -445,23 +676,41 @@
       </div>
       <div class="map-legend">
         <div class="legend-item">
-          <span class="legend-dot" style="background: #4CAF50;"></span> Low Activity
-          <span class="legend-dot" style="background: #FFC107;"></span> Moderate
-          <span class="legend-dot" style="background: #F44336;"></span> Busy
+          <span class="legend-dot" style="background: #4CAF50;"></span> Hotels
+          <span class="legend-dot" style="background: #FF5722;"></span> Restaurants
+          <span class="legend-dot" style="background: #2196F3;"></span> Attractions
         </div>
       </div>
       <div class="real-time-info">
-        <div class="info-card weather-brief">
-          <h4>🌤️ Weather</h4>
-          <div id="weather-brief-content">Loading...</div>
+        <div class="info-card weather-brief london-weather">
+          <h4>🌤️ London Weather</h4>
+          <div id="london-weather-content">
+            <div class="weather-details">
+              <div class="weather-detail">
+                <i class="fas fa-sun"></i> Sunrise: <span id="sunrise-time">Loading...</span>
+              </div>
+              <div class="weather-detail">
+                <i class="fas fa-moon"></i> Sunset: <span id="sunset-time">Loading...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="info-card weather-brief your-weather">
+          <h4>📍 Your Local Weather</h4>
+          <div id="local-weather-content">
+            <div class="weather-details">
+              <div class="weather-detail">
+                <i class="fas fa-sun"></i> Sunrise: <span id="local-sunrise-time">Loading...</span>
+              </div>
+              <div class="weather-detail">
+                <i class="fas fa-moon"></i> Sunset: <span id="local-sunset-time">Loading...</span>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="info-card transport-brief">
           <h4>🚇 Tube Status</h4>
           <div id="tube-brief-content">Loading...</div>
-        </div>
-        <div class="info-card events-brief">
-          <h4>🎭 Today's Events</h4>
-          <div id="events-brief-content">Loading...</div>
         </div>
       </div>
       <div id="mapid"></div>
@@ -516,13 +765,14 @@
       </div>
     </section>
   </div>
-
   <df-messenger
-    chat-icon="https://drive.google.com/uc?export=view&id=1VsoSncOJ78o9WZ9maLqN0MwDVpA9NNgO"
-    chat-title="London Guide Assistant"
-    agent-id="19787e79-c4bb-4fd5-bdff-85dedd2de68d"
-    language-code="en"
-  ></df-messenger>
+  intent="WELCOME"
+  chat-title="LondonTourismBot"
+  agent-id="19787e79-c4bb-4fd5-bdff-85dedd2de68d"
+  language-code="en"
+  environment="web"
+></df-messenger>
+
 
   <div class="notification-badge" id="notification">
     <span id="notification-text"></span>
@@ -624,6 +874,7 @@
     async function convertCurrency() {
       const amount = document.getElementById('amount').value;
       const fromCurrency = document.getElementById('from-currency').value;
+      const historyDiv = document.getElementById('conversion-history');
       
       if (!amount) {
         showNotification("Please enter an amount to convert");
@@ -637,6 +888,17 @@
         const data = await response.json();
         const rate = data.rates.GBP;
         const result = (amount * rate).toFixed(2);
+        
+        // Add to conversion history
+        const historyItem = document.createElement('div');
+        historyItem.className = 'conversion-item';
+        historyItem.innerHTML = `${amount} ${fromCurrency} = ${result} GBP`;
+        historyDiv.insertBefore(historyItem, historyDiv.firstChild);
+
+        // Keep only last 5 conversions
+        if (historyDiv.children.length > 5) {
+          historyDiv.removeChild(historyDiv.lastChild);
+        }
         
         Swal.fire({
           title: '💷 Currency Conversion',
@@ -666,7 +928,15 @@
       { name: 'Victoria', lat: 51.4965, lng: -0.1447, lines: ['Victoria', 'Circle', 'District'] },
       { name: 'Baker Street', lat: 51.5226, lng: -0.1571, lines: ['Bakerloo', 'Circle', 'Hammersmith & City', 'Jubilee', 'Metropolitan'] },
       { name: 'Waterloo', lat: 51.5036, lng: -0.1143, lines: ['Bakerloo', 'Jubilee', 'Northern', 'Waterloo & City'] },
-      { name: 'Bank', lat: 51.5133, lng: -0.0886, lines: ['Central', 'Northern', 'Waterloo & City', 'DLR'] }
+      { name: 'Bank', lat: 51.5133, lng: -0.0886, lines: ['Central', 'Northern', 'Waterloo & City', 'DLR'] },
+      { name: 'South Kensington', lat: 51.4941, lng: -0.1738,
+        lines: ['Circle', 'District', 'Piccadilly'],
+        status: { District: 'Good Service', Circle: 'Good Service', Piccadilly: 'Good Service' }
+      },
+      { name: 'Earl\'s Court', lat: 51.4915, lng: -0.1973,
+        lines: ['District', 'Piccadilly'],
+        status: { District: 'Good Service', Piccadilly: 'Good Service' }
+      }
     ];
 
     // Initialize map with enhanced features
@@ -815,29 +1085,154 @@
       tubeBrief.innerHTML = content;
     }
 
-    // Function to update weather brief
-    async function updateWeatherBrief() {
-      const weatherBrief = document.getElementById('weather-brief-content');
+    // Function to update London weather
+    async function updateLondonWeather() {
+      const weatherContent = document.getElementById('london-weather-content');
       const API_KEY = "c6a1a88292591e7ab44a1f43d43a3774";
       
       try {
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&appid=${API_KEY}`);
         const data = await response.json();
         
-        weatherBrief.innerHTML = `
-          <div style="display: flex; align-items: center; justify-content: space-between;">
+        const icon = getWeatherIcon(data.weather[0].main);
+        const temp = Math.round(data.main.temp);
+        const feelsLike = Math.round(data.main.feels_like);
+        
+        weatherContent.innerHTML = `
+          <div class="weather-content">
+            <div class="weather-icon">${icon}</div>
             <div>
-              <h3>${Math.round(data.main.temp)}°C</h3>
-              <p>${data.weather[0].description}</p>
+              <div class="weather-temp">${temp}°C</div>
+              <div>${data.weather[0].description}</div>
             </div>
+          </div>
+          <div class="weather-details">
+            <div class="weather-detail">
+              <i class="fas fa-temperature-low"></i> Feels: ${feelsLike}°C
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-tint"></i> ${data.main.humidity}%
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-wind"></i> ${Math.round(data.wind.speed * 3.6)} km/h
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-compress-arrows-alt"></i> ${data.main.pressure} hPa
+            </div>
+          </div>
+          <div class="weather-time">
+            <i class="far fa-clock"></i> Updated: ${formatTime(data.dt)}
+          </div>
+          ${data.main.temp <= 5 ? `
+            <div class="weather-alert">
+              <i class="fas fa-exclamation-triangle"></i> Cold weather alert
+            </div>
+          ` : ''}
+        `;
+      } catch (error) {
+        weatherContent.innerHTML = 'Weather data unavailable';
+      }
+    }
+
+    // Function to get weather icon based on condition
+    function getWeatherIcon(condition) {
+      const icons = {
+        'Clear': '☀️',
+        'Clouds': '☁️',
+        'Rain': '🌧️',
+        'Snow': '🌨️',
+        'Thunderstorm': '⛈️',
+        'Drizzle': '🌦️',
+        'Mist': '🌫️',
+        'default': '🌤️'
+      };
+      return icons[condition] || icons.default;
+    }
+
+    // Function to format time
+    function formatTime(timestamp) {
+      return new Date(timestamp * 1000).toLocaleTimeString('en-GB', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Function to get local weather
+    async function getLocalWeather() {
+      const weatherContent = document.getElementById('local-weather-content');
+      const API_KEY = "c6a1a88292591e7ab44a1f43d43a3774";
+
+      weatherContent.innerHTML = '<div class="loading-animation"></div>';
+      
+      try {
+        // Get user's location
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        const { latitude, longitude } = position.coords;
+        
+        // Get weather data
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
+        );
+        const data = await response.json();
+        
+        const icon = getWeatherIcon(data.weather[0].main);
+        const temp = Math.round(data.main.temp);
+        const feelsLike = Math.round(data.main.feels_like);
+        
+        weatherContent.innerHTML = `
+          <div class="weather-content">
+            <div class="weather-icon">${icon}</div>
             <div>
-              <p>💧 ${data.main.humidity}%</p>
-              <p>💨 ${data.wind.speed}m/s</p>
+              <div class="weather-temp">${temp}°C</div>
+              <div>${data.weather[0].description}</div>
             </div>
+          </div>
+          <div class="weather-location">
+            <i class="fas fa-map-marker-alt"></i> ${data.name}
+          </div>
+          <div class="weather-details">
+            <div class="weather-detail">
+              <i class="fas fa-temperature-low"></i> Feels: ${feelsLike}°C
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-tint"></i> ${data.main.humidity}%
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-wind"></i> ${Math.round(data.wind.speed * 3.6)} km/h
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-sun"></i> UV: ${await getUVIndex(latitude, longitude)}
+            </div>
+          </div>
+          <div class="weather-time">
+            <i class="far fa-clock"></i> Updated: ${formatTime(data.dt)}
           </div>
         `;
       } catch (error) {
-        weatherBrief.innerHTML = 'Weather data unavailable';
+        weatherContent.innerHTML = `
+          <div style="text-align: center;">
+            <p>Unable to get weather data</p>
+            <button class="btn btn-small" onclick="getLocalWeather()">
+              <i class="fas fa-redo"></i> Try Again
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    // Function to get UV index
+    async function getUVIndex(lat, lon) {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${API_KEY}`
+        );
+        const data = await response.json();
+        return Math.round(data.value);
+      } catch (error) {
+        return 'N/A';
       }
     }
 
@@ -849,15 +1244,16 @@
         { name: "Gordon Ramsay Restaurant", lat: 51.5032, lng: -0.1916, rating: 4.5, cuisine: "British", price: "££££" },
         { name: "Sketch", lat: 51.5129, lng: -0.1411, rating: 4.7, cuisine: "French", price: "££££" },
         { name: "Duck & Waffle", lat: 51.5162, lng: -0.0807, rating: 4.3, cuisine: "British", price: "£££" },
-        // Add more restaurants...
+        { name: "The Clove Club", lat: 51.5271, lng: -0.0799, rating: 4.6, cuisine: "Modern European", price: "££££" },
+        { name: "Dishoom", lat: 51.5129, lng: -0.1277, rating: 4.5, cuisine: "Indian", price: "££" }
       ];
 
       restaurants.forEach(restaurant => {
         const marker = L.marker([restaurant.lat, restaurant.lng], {
           icon: L.divIcon({
-            className: 'restaurant-marker',
+            className: 'map-marker restaurant-marker',
             html: '🍽️',
-            iconSize: [24, 24]
+            iconSize: [30, 30]
           })
         });
 
@@ -914,15 +1310,16 @@
         { name: "The Ritz London", lat: 51.5068, lng: -0.1419, rating: 4.8, price: "££££" },
         { name: "The Savoy", lat: 51.5108, lng: -0.1198, rating: 4.7, price: "££££" },
         { name: "Shangri-La The Shard", lat: 51.5045, lng: -0.0865, rating: 4.6, price: "££££" },
-        // Add more hotels...
+        { name: "The Dorchester", lat: 51.5067, lng: -0.1527, rating: 4.7, price: "££££" },
+        { name: "Rosewood London", lat: 51.5172, lng: -0.1168, rating: 4.6, price: "££££" }
       ];
 
       hotels.forEach(hotel => {
         const marker = L.marker([hotel.lat, hotel.lng], {
           icon: L.divIcon({
-            className: 'hotel-marker',
+            className: 'map-marker hotel-marker',
             html: '🏨',
-            iconSize: [24, 24]
+            iconSize: [30, 30]
           })
         });
 
@@ -944,12 +1341,12 @@
 
     // Initialize real-time information
     function initializeRealTimeInfo() {
-      updateWeatherBrief();
+      updateLondonWeather();
       updateTubeBrief();
       
       // Update every 5 minutes
       setInterval(() => {
-        updateWeatherBrief();
+        updateLondonWeather();
         updateTubeBrief();
       }, 300000);
     }
@@ -1086,8 +1483,157 @@
     });
 
     observer.observe(document.getElementById('visitors-count'));
+
+    // TripAdvisor Integration
+    async function fetchTripAdvisorData() {
+      // Simulated TripAdvisor data (replace with actual API call)
+      return {
+        crowdLevels: {
+          'Tower Bridge': 75,
+          'London Eye': 85,
+          'British Museum': 60,
+          'Buckingham Palace': 80
+        },
+        satisfaction: {
+          'Tower Bridge': 4.5,
+          'London Eye': 4.3,
+          'British Museum': 4.8,
+          'Buckingham Palace': 4.6
+        },
+        priceIndex: {
+          'Tower Bridge': 'Medium',
+          'London Eye': 'High',
+          'British Museum': 'Free',
+          'Buckingham Palace': 'High'
+        }
+      };
+    }
+
+    // Show different insights
+    async function showInsight(type) {
+      const insightContent = document.getElementById('insight-content');
+      const data = await fetchTripAdvisorData();
+      
+      // Update active tab
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      let content = '<div class="insight-grid">';
+      
+      switch(type) {
+        case 'crowd':
+          Object.entries(data.crowdLevels).forEach(([place, level]) => {
+            const color = level > 80 ? '#F44336' : level > 60 ? '#FFC107' : '#4CAF50';
+            content += `
+              <div class="insight-item">
+                <strong>${place}</strong>
+                <div class="progress-bar">
+                  <div class="progress" style="width: ${level}%; background: ${color}"></div>
+                </div>
+                <span>${level}% Busy</span>
+              </div>
+            `;
+          });
+          break;
+        
+        case 'satisfaction':
+          Object.entries(data.satisfaction).forEach(([place, rating]) => {
+            const stars = '⭐'.repeat(Math.floor(rating));
+            content += `
+              <div class="insight-item">
+                <strong>${place}</strong>
+                <div>${stars} ${rating}</div>
+                <small>${Math.round((rating - Math.floor(rating)) * 100)}% towards next star</small>
+              </div>
+            `;
+          });
+          break;
+        
+        case 'prices':
+          Object.entries(data.priceIndex).forEach(([place, price]) => {
+            const priceIcon = price === 'High' ? '💰💰💰' : price === 'Medium' ? '💰💰' : '💰';
+            content += `
+              <div class="insight-item">
+                <strong>${place}</strong>
+                <div>${priceIcon}</div>
+                <small>${price} Price Range</small>
+              </div>
+            `;
+          });
+          break;
+      }
+      
+      content += '</div>';
+      insightContent.innerHTML = content;
+    }
+
+    // Initialize insights on load
+    document.addEventListener('DOMContentLoaded', () => {
+      showInsight('crowd');
+      initializeRealTimeInfo();
+    });
+
+    // Update weather information with sunrise/sunset
+    async function updateWeatherInfo() {
+      const API_KEY = "YOUR_API_KEY"; // Replace with your OpenWeatherMap API key
+      
+      // London weather
+      try {
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&units=metric&appid=${API_KEY}`);
+        const data = await response.json();
+        
+        document.getElementById('sunrise-time').textContent = 
+          new Date(data.sys.sunrise * 1000).toLocaleTimeString('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        document.getElementById('sunset-time').textContent = 
+          new Date(data.sys.sunset * 1000).toLocaleTimeString('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+      } catch (error) {
+        console.error('Error fetching London weather:', error);
+      }
+      
+      // Local weather (if location permitted)
+      try {
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+        
+        const { latitude, longitude } = position.coords;
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
+        );
+        const data = await response.json();
+        
+        document.getElementById('local-sunrise-time').textContent = 
+          new Date(data.sys.sunrise * 1000).toLocaleTimeString('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+        document.getElementById('local-sunset-time').textContent = 
+          new Date(data.sys.sunset * 1000).toLocaleTimeString('en-GB', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+      } catch (error) {
+        console.error('Error fetching local weather:', error);
+      }
+    }
+
+    // Initialize weather info on load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateWeatherInfo();
+      showInsight('crowd');
+      initializeRealTimeInfo();
+      
+      // Update weather info every 5 minutes
+      setInterval(updateWeatherInfo, 300000);
+    });
   </script>
 </body>
 </html> 
-
-
