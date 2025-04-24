@@ -1634,6 +1634,22 @@
       // Update weather info every 5 minutes
       setInterval(updateWeatherInfo, 300000);
     });
+
+    // Dialogflow Messenger Observer
+    window.addEventListener('dfMessengerLoaded', function () {
+      const dfMessenger = document.querySelector('df-messenger');
+      const chat = dfMessenger.shadowRoot.querySelector('df-messenger-chat');
+      const messages = chat.shadowRoot.querySelectorAll('df-message');
+
+      const observer = new MutationObserver(() => {
+        const lastMessage = chat.shadowRoot.querySelectorAll('df-message');
+        if (lastMessage.length) {
+          console.log("🧠 LIVE BOT MESSAGE:", lastMessage[lastMessage.length - 1].textContent);
+        }
+      });
+
+      observer.observe(chat.shadowRoot, { childList: true, subtree: true });
+    });
   </script>
 </body>
 </html> 
