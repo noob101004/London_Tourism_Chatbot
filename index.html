@@ -1145,7 +1145,11 @@
     async function getLocalWeather() {
       const weatherContent = document.getElementById('local-weather-content');
       const API_KEY = "c6a1a88292591e7ab44a1f43d43a3774";
+      const loadingSpinner = document.getElementById('weather-loading');
+      const weatherText = document.getElementById('weather-text');
 
+      loadingSpinner.style.display = 'inline-block';
+      weatherText.style.display = 'none';
       weatherContent.innerHTML = '<div class="loading-animation"></div>';
       
       try {
@@ -1160,6 +1164,11 @@
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
         );
+        
+        if (!response.ok) {
+          throw new Error(`Weather API error: ${response.status}`);
+        }
+        
         const data = await response.json();
         
         const icon = getWeatherIcon(data.weather[0].main);
@@ -1187,36 +1196,25 @@
             <div class="weather-detail">
               <i class="fas fa-wind"></i> ${Math.round(data.wind.speed * 3.6)} km/h
             </div>
-            <div class="weather-detail">
-              <i class="fas fa-sun"></i> UV: ${await getUVIndex(latitude, longitude)}
-            </div>
           </div>
           <div class="weather-time">
             <i class="far fa-clock"></i> Updated: ${formatTime(data.dt)}
           </div>
         `;
       } catch (error) {
+        console.error('Weather fetch error:', error);
         weatherContent.innerHTML = `
-          <div style="text-align: center;">
+          <div style="text-align: center; color: var(--accent-color);">
             <p>Unable to get weather data</p>
+            <p><small>${error.message}</small></p>
             <button class="btn btn-small" onclick="getLocalWeather()">
               <i class="fas fa-redo"></i> Try Again
             </button>
           </div>
         `;
-      }
-    }
-
-    // Function to get UV index
-    async function getUVIndex(lat, lon) {
-      try {
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${API_KEY}`
-        );
-        const data = await response.json();
-        return Math.round(data.value);
-      } catch (error) {
-        return 'N/A';
+      } finally {
+        loadingSpinner.style.display = 'none';
+        weatherText.style.display = 'inline';
       }
     }
 
