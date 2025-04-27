@@ -542,6 +542,12 @@
     }
   </style>
   <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+  <df-messenger
+    chat-icon="https://drive.google.com/uc?export=view&id=1VsoSncOJ78o9WZ9maLqN0MwDVpA9NNgO"
+    chat-title="London_Tourism_chatbot"
+    agent-id="19787e79-c4bb-4fd5-bdff-85dedd2de68d"
+    language-code="en"
+  ></df-messenger>
 </head>
 <body>
   <header>
@@ -567,23 +573,21 @@
       </div>
     </section>
 
-    <div class="grid-container">
-      <div class="card">
-        <h3>🌦️ Live Weather</h3>
+    <div class="grid-container" style="grid-template-columns: 1fr;">
+      <div class="card" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
         <div class="weather-widget">
+          <h3>🌦️ Live Weather</h3>
           <div id="weather-info">
-            <h4>Current London Weather</h4>
-            <button class="btn" onclick="getWeather()">
+            <button class="btn btn-small" onclick="getLocalWeather()">
               <span id="weather-loading" class="loading-animation" style="display: none;"></span>
-              <span id="weather-text">Check Weather</span>
+              <span id="weather-text">Get Current Location Weather</span>
             </button>
+            <div id="local-weather-content"></div>
           </div>
         </div>
-      </div>
 
-      <div class="card">
-        <h3>💷 Currency Converter</h3>
         <div class="currency-converter">
+          <h3>💷 Currency Converter</h3>
           <input type="number" id="amount" placeholder="Amount" class="form-control">
           <select id="from-currency" class="form-control">
             <option value="USD">USD - US Dollar</option>
@@ -617,9 +621,9 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card" style="margin-top: 2rem;">
         <h3>🎫 Essential Tips</h3>
-        <div class="tips-container">
+        <div class="tips-container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
           <div class="tip-item">
             <i class="fas fa-subway"></i>
             <div>
@@ -648,18 +652,6 @@
               <p>Always carry a compact umbrella, London weather can be unpredictable.</p>
             </div>
           </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>📊 Live Insights</h3>
-        <div id="live-insights" class="live-insights">
-          <div class="insight-tabs">
-            <button class="tab-btn active" onclick="showInsight('crowd')">👥 Crowd Levels</button>
-            <button class="tab-btn" onclick="showInsight('satisfaction')">⭐ Ratings</button>
-            <button class="tab-btn" onclick="showInsight('prices')">💰 Price Trends</button>
-          </div>
-          <div id="insight-content" class="insight-content">Loading insights...</div>
         </div>
       </div>
     </div>
@@ -765,14 +757,6 @@
       </div>
     </section>
   </div>
-  <df-messenger
-  intent="WELCOME"
-  chat-title="LondonTourismBot"
-  agent-id="19787e79-c4bb-4fd5-bdff-85dedd2de68d"
-  language-code="en"
-  environment="web"
-></df-messenger>
-
 
   <div class="notification-badge" id="notification">
     <span id="notification-text"></span>
