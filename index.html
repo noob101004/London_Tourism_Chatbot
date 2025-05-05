@@ -375,112 +375,6 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-    
-    /* Custom Date Suggestion Styles */
-    .itinerary-column {
-      background: white;
-      border-radius: 15px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-    }
-    
-    .itinerary-column h4 {
-      font-size: 1.3rem;
-      margin-top: 0;
-      margin-bottom: 1rem;
-      color: var(--primary-color);
-      border-bottom: 2px solid var(--accent-color);
-      padding-bottom: 0.5rem;
-      display: inline-block;
-    }
-    
-    .custom-suggestion-container {
-      margin-top: 1rem;
-    }
-    
-    .custom-input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-    
-    .custom-input:focus {
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
-      outline: none;
-    }
-    
-    .custom-option-header {
-      margin-bottom: 5px;
-    }
-    
-    .custom-option-label {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    
-    .custom-checkbox {
-      margin-right: 8px;
-      width: 18px;
-      height: 18px;
-    }
-    
-    #custom-option-container {
-      margin-top: 15px;
-      padding: 12px;
-      background-color: #f8f9fa;
-      border-radius: 8px;
-      border-left: 3px solid var(--accent-color);
-    }
-    
-    .custom-idea-checkbox {
-      background-color: rgba(231, 76, 60, 0.1);
-      border-radius: 8px;
-      padding: 5px 8px;
-      margin-top: 10px;
-      border-left: 3px solid var(--accent-color);
-      font-weight: 600;
-    }
-    
-    #custom-idea-container {
-      background-color: rgba(231, 76, 60, 0.05);
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
-    
-    #custom-idea-container .form-text {
-      display: block;
-      margin-top: 5px;
-      font-size: 0.85rem;
-      color: #666;
-      font-style: italic;
-    }
-    
-    .custom-btn {
-      background: linear-gradient(135deg, #e74c3c, #c0392b);
-      margin-top: 1rem;
-    }
-    
-    .custom-btn:hover {
-      background: linear-gradient(135deg, #c0392b, #e74c3c);
-    }
-    
-    .suggestion-result {
-      margin-top: 1.5rem;
-      padding: 1rem;
-      background: #f8f9fa;
-      border-radius: 8px;
-      border-left: 4px solid var(--accent-color);
-      min-height: 50px;
-      white-space: pre-line;
-    }
 
     .map-controls {
       margin-bottom: 1rem;
@@ -1673,94 +1567,77 @@
     <!-- Add Itinerary Generator Section -->
     <section class="feature-section itinerary-section">
       <div class="itinerary-intro">
-        <h3>🗺️ Plan Your Perfect London Adventure</h3>
+        <h3>✨ Your Perfect London Adventure Awaits!</h3>
         <p>Ready to explore London like a local? Let our AI-powered itinerary planner craft a personalized journey just for you. Whether you're a history buff, foodie, or culture enthusiast, we'll create an unforgettable experience that matches your interests and style.</p>
-      </div>
-
-      <div class="container">
-        <div class="grid-container">
-          <!-- Left Column: Structured Itinerary Planner -->
-          <div class="itinerary-column">
-            <h4>Plan with Options</h4>
-            <form id="itineraryForm">
-              <div class="form-group">
-                <label for="days">🗓️ How many days would you like to explore?</label>
-                <input type="number" id="days" min="1" max="14" required placeholder="Enter number of days (1-14)">
-              </div>
-              
-              <div class="form-group">
-                <label for="visitType">👥 Who's joining this adventure?</label>
-                <select id="visitType" required>
-                  <option value="">Choose your travel party...</option>
-                  <option value="couple">💑 Romantic Couple</option>
-                  <option value="friends">👫 Friends Group</option>
-                  <option value="family">👨‍👩‍👧‍👦 Family with Kids</option>
-                  <option value="senior">👴👵 Senior Couple</option>
-                  <option value="solo">🚶‍♂️ Solo Traveler</option>
-                  <option value="date">💖 Date Night</option>
-                  <option value="group">👥 Large Group</option>
-                </select>
-              </div>
-              
-              <div class="form-group">
-                <label>🎯 What interests you most about London?</label>
-                <div class="interests-container">
-                  <label class="interest-checkbox">
-                    <input type="checkbox" name="interests" value="museums"> 🏛️ Museums
-                  </label>
-                  <label class="interest-checkbox">
-                    <input type="checkbox" name="interests" value="history"> 📚 History
-                  </label>
-                  <label class="interest-checkbox">
-                    <input type="checkbox" name="interests" value="art"> 🎨 Art
-                  </label>
-                  <label class="interest-checkbox">
-                    <input type="checkbox" name="interests" value="food"> 🍽️ Food
-                  </label>
-                  <label class="interest-checkbox">
-                    <input type="checkbox" name="interests" value="shopping"> 🛍️ Shopping
-                  </label>
-                  <label class="interest-checkbox">
-                    <input type="checkbox" name="interests" value="parks"> 🌳 Parks
-                  </label>
-                  <label class="interest-checkbox">
-                    <input type="checkbox" name="interests" value="nightlife"> 🌙 Nightlife
-                  </label>
-                  <label class="interest-checkbox">
-                    <input type="checkbox" name="interests" value="music"> 🎵 Music
-                  </label>
-                  <label class="interest-checkbox custom-idea-checkbox">
-                    <input type="checkbox" id="custom-idea-checkbox" name="interests" value="custom-idea"> ✨ Describe your own idea
-                  </label>
-                </div>
-                <div id="custom-idea-container" style="display: none; margin-top: 10px;">
-                  <input type="text" id="custom-idea-input" placeholder="e.g., suggest a 2 day date for Italian food lovers" class="custom-input">
-                  <small class="form-text">Your idea will be used for personalized suggestions</small>
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label for="budget">💰 What's your daily budget per person?</label>
-                <select id="budget" required>
-                  <option value="">Select your preferred budget range...</option>
-                  <option value="budget">🪙 Budget (£30-80/day) - Perfect for savvy travelers</option>
-                  <option value="moderate">💷 Moderate (£80-150/day) - Balanced comfort & experiences</option>
-                  <option value="premium">💎 Premium (£150-300/day) - Extra comfort & unique experiences</option>
-                  <option value="luxury">👑 Luxury (£300+/day) - Ultimate London experience</option>
-                </select>
-              </div>
-              
-
-              
-              <button type="submit" class="generate-btn">
-                <span>🎨 Create My Perfect Itinerary</span>
-              </button>
-            </form>
-          </div>
-        </div>
+        <p>Simply tell us about your dream London trip below, and we'll do the rest! 🎯</p>
       </div>
       
-      <div id="itineraryResult"></div>
+      <div class="container" style="max-width: 800px; margin: 0 auto; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <form id="itineraryForm">
+          <div class="form-group">
+            <label for="days">🗓️ How many days would you like to explore?</label>
+            <input type="number" id="days" min="1" max="14" required placeholder="Enter number of days (1-14)">
+          </div>
+          
+          <div class="form-group">
+            <label for="visitType">👥 Who's joining this adventure?</label>
+            <select id="visitType" required>
+              <option value="">Choose your travel party...</option>
+              <option value="couple">💑 Romantic Couple</option>
+              <option value="friends">👫 Friends Group</option>
+              <option value="family">👨‍👩‍👧‍👦 Family with Kids</option>
+              <option value="senior">👴👵 Senior Couple</option>
+              <option value="solo">🚶‍♂️ Solo Traveler</option>
+              <option value="date">💖 Date Night</option>
+              <option value="group">👥 Large Group</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>🎯 What interests you most about London?</label>
+            <div class="interests-container">
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="museums"> 🏛️ Museums
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="history"> 📚 History
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="art"> 🎨 Art
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="food"> 🍽️ Food
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="shopping"> 🛍️ Shopping
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="parks"> 🌳 Parks
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="nightlife"> 🌙 Nightlife
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="music"> 🎵 Music
+              </label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="budget">💰 What's your daily budget per person?</label>
+            <select id="budget" required>
+              <option value="">Select your preferred budget range...</option>
+              <option value="budget">🪙 Budget (£30-80/day) - Perfect for savvy travelers</option>
+              <option value="moderate">💷 Moderate (£80-150/day) - Balanced comfort & experiences</option>
+              <option value="premium">💎 Premium (£150-300/day) - Extra comfort & unique experiences</option>
+              <option value="luxury">👑 Luxury (£300+/day) - Ultimate London experience</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="generate-btn">
+            <span>🎨 Create My Perfect Itinerary</span>
+          </button>
+        </form>
         
         <div id="loadingSpinner">
           <div class="spinner"></div>
@@ -2687,18 +2564,6 @@
       return R * c;
     }
 
-    // Show/hide custom idea input when checkbox is clicked
-    document.getElementById('custom-idea-checkbox').addEventListener('change', function() {
-      const customIdeaContainer = document.getElementById('custom-idea-container');
-      if (this.checked) {
-        customIdeaContainer.style.display = 'block';
-        document.getElementById('custom-idea-input').setAttribute('required', 'required');
-      } else {
-        customIdeaContainer.style.display = 'none';
-        document.getElementById('custom-idea-input').removeAttribute('required');
-      }
-    });
-    
     // Itinerary Generator Code
     document.getElementById('itineraryForm').addEventListener('submit', async function(e) {
       e.preventDefault();
@@ -2720,23 +2585,7 @@
 
       try {
         // Prepare the prompt for Gemini
-        let prompt;
-        
-        // Check if custom idea checkbox is checked
-        if (document.getElementById('custom-idea-checkbox').checked) {
-          const customIdea = document.getElementById('custom-idea-input').value;
-          prompt = `You are a London travel expert assistant. The user has asked for: "${customIdea}".
-
-Please provide a detailed, personalized response that addresses their specific request.
-
-Focus ONLY on the keywords and ideas mentioned in their query, without considering days, travel party, or other interests.
-
-If they're asking for a date idea or itinerary, include specific venues, timing suggestions, and tips to make it special.
-
-Format your response in a friendly, conversational way with emoji and clear sections.`;
-        } else {
-          // Regular itinerary prompt
-          prompt = `Create a detailed ${days}-day London itinerary for a ${visitType} trip. Interests include: ${interests.join(', ')}. Daily budget: ${budget}. Please include:
+        const prompt = `Create a detailed ${days}-day London itinerary for a ${visitType} trip. Interests include: ${interests.join(', ')}. Daily budget: ${budget}. Please include:
 - Day-by-day breakdown with clear time slots (format as 9:00 AM - 11:00 AM)
 - Specific attractions and activities through 8:00 PM
 - After 8:00 PM or at the end of the day, add:
@@ -2744,7 +2593,6 @@ Format your response in a friendly, conversational way with emoji and clear sect
   * Budget breakdown showing costs for the day
   * Tips and other useful information as bullet points
 IMPORTANT: Please format with clear sections for each day. Put the schedule in a time-based structure up to 8:00 PM, then add the transportation, budget and tips information AFTER the timetable as separate bullet points.`;
-        }
 
         // Call Gemini API
         const API_KEY = 'AIzaSyCoIfWdcyG-R41MIaB7HT4mOSo8kuv6gNI';
@@ -3233,41 +3081,6 @@ IMPORTANT: Please format with clear sections for each day. Put the schedule in a
       // Update forecast every 30 minutes
       setInterval(updateWeatherForecast, 1800000);
     });
-  </script>
-
-  <!-- Custom Date Suggestion Feature -->
-  <script>
-    async function processCustomDateSuggestion() {
-      const suggestionInput = document.getElementById('custom-date-suggestion').value.trim();
-      
-      if (!suggestionInput) {
-        alert('Please enter a suggestion');
-        return;
-      }
-      
-      const resultContainer = document.getElementById('custom-suggestion-result');
-      resultContainer.innerHTML = '<div class="loading-animation"></div> Processing your suggestion...';
-      
-      try {
-        const response = await fetch('/process-custom-suggestion', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ suggestion: suggestionInput })
-        });
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        
-        const data = await response.json();
-        resultContainer.innerHTML = data.result;
-      } catch (error) {
-        console.error('Error:', error);
-        resultContainer.innerHTML = 'Sorry, there was an error processing your suggestion. Please try again.';
-      }
-    }
   </script>
 </body>
 </html>
