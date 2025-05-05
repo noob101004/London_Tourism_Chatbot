@@ -439,6 +439,30 @@
       border-left: 3px solid var(--accent-color);
     }
     
+    .custom-idea-checkbox {
+      background-color: rgba(231, 76, 60, 0.1);
+      border-radius: 8px;
+      padding: 5px 8px;
+      margin-top: 10px;
+      border-left: 3px solid var(--accent-color);
+      font-weight: 600;
+    }
+    
+    #custom-idea-container {
+      background-color: rgba(231, 76, 60, 0.05);
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    
+    #custom-idea-container .form-text {
+      display: block;
+      margin-top: 5px;
+      font-size: 0.85rem;
+      color: #666;
+      font-style: italic;
+    }
+    
     .custom-btn {
       background: linear-gradient(135deg, #e74c3c, #c0392b);
       margin-top: 1rem;
@@ -1705,6 +1729,13 @@
                   <label class="interest-checkbox">
                     <input type="checkbox" name="interests" value="music"> 🎵 Music
                   </label>
+                  <label class="interest-checkbox custom-idea-checkbox">
+                    <input type="checkbox" id="custom-idea-checkbox" name="interests" value="custom-idea"> ✨ Describe your own idea
+                  </label>
+                </div>
+                <div id="custom-idea-container" style="display: none; margin-top: 10px;">
+                  <input type="text" id="custom-idea-input" placeholder="e.g., suggest a 2 day date for Italian food lovers" class="custom-input">
+                  <small class="form-text">Your idea will be used for personalized suggestions</small>
                 </div>
               </div>
               
@@ -1719,17 +1750,7 @@
                 </select>
               </div>
               
-              <div class="form-group" id="custom-option-container">
-                <div class="custom-option-header">
-                  <label class="custom-option-label">
-                    <input type="checkbox" id="use-custom-suggestion" class="custom-checkbox">
-                    <span>✨ Or describe your own idea</span>
-                  </label>
-                </div>
-                <div id="custom-suggestion-container" style="display: none; margin-top: 10px;">
-                  <input type="text" id="custom-suggestion" placeholder="e.g., suggest a 2 day date for Italian food lovers" class="custom-input">
-                </div>
-              </div>
+
               
               <button type="submit" class="generate-btn">
                 <span>🎨 Create My Perfect Itinerary</span>
@@ -2666,15 +2687,15 @@
       return R * c;
     }
 
-    // Show/hide custom suggestion input when checkbox is clicked
-    document.getElementById('use-custom-suggestion').addEventListener('change', function() {
-      const customSuggestionContainer = document.getElementById('custom-suggestion-container');
+    // Show/hide custom idea input when checkbox is clicked
+    document.getElementById('custom-idea-checkbox').addEventListener('change', function() {
+      const customIdeaContainer = document.getElementById('custom-idea-container');
       if (this.checked) {
-        customSuggestionContainer.style.display = 'block';
-        document.getElementById('custom-suggestion').setAttribute('required', 'required');
+        customIdeaContainer.style.display = 'block';
+        document.getElementById('custom-idea-input').setAttribute('required', 'required');
       } else {
-        customSuggestionContainer.style.display = 'none';
-        document.getElementById('custom-suggestion').removeAttribute('required');
+        customIdeaContainer.style.display = 'none';
+        document.getElementById('custom-idea-input').removeAttribute('required');
       }
     });
     
@@ -2701,12 +2722,14 @@
         // Prepare the prompt for Gemini
         let prompt;
         
-        // Check if custom suggestion checkbox is checked
-        if (document.getElementById('use-custom-suggestion').checked) {
-          const customSuggestion = document.getElementById('custom-suggestion').value;
-          prompt = `You are a London travel expert assistant. The user has asked for: "${customSuggestion}".
+        // Check if custom idea checkbox is checked
+        if (document.getElementById('custom-idea-checkbox').checked) {
+          const customIdea = document.getElementById('custom-idea-input').value;
+          prompt = `You are a London travel expert assistant. The user has asked for: "${customIdea}".
 
 Please provide a detailed, personalized response that addresses their specific request.
+
+Focus ONLY on the keywords and ideas mentioned in their query, without considering days, travel party, or other interests.
 
 If they're asking for a date idea or itinerary, include specific venues, timing suggestions, and tips to make it special.
 
