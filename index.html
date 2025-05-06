@@ -1050,148 +1050,9 @@
       .print-btn {
         display: none;
       }
-      #itineraryResult, .itinerary-columns {
-        display: flex;
-        gap: 32px;
-        flex-wrap: wrap;
-        align-items: flex-start;
-      }
-      .itinerary-standard {
-        background: #fff;
-        border-radius: 14px;
-        box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
-        padding: 24px 20px;
-        margin-bottom: 16px;
-        min-width: 320px;
-        flex: 1 1 340px;
-      }
-      .itinerary-custom {
-        background: linear-gradient(120deg, #fff6f0 60%, #ffe5e0 100%);
-        border-left: 4px solid var(--accent-color);
-        border-radius: 14px;
-        box-shadow: 0 4px 16px rgba(231, 76, 60, 0.08);
-        padding: 28px 24px 24px 24px;
-        margin-bottom: 16px;
-        min-width: 320px;
-        flex: 1 1 340px;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .itinerary-custom h4 {
-        color: var(--accent-color);
-        margin-top: 0;
-        font-size: 1.25rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .itinerary-custom h4::before {
-        content: "\2728";
-        font-size: 1.3em;
-        margin-right: 0.2em;
-      }
-      .itinerary-custom p {
-        margin-bottom: 0.5rem;
-        color: #444;
-        font-size: 1rem;
-      }
-      .custom-input {
-        width: 100%;
-        padding: 14px 14px 14px 2.2em;
-        border: 1.5px solid #e2e8f0;
-        border-radius: 9px;
-        font-size: 1.05rem;
-        transition: all 0.2s;
-        background: #fff url('data:image/svg+xml;utf8,<svg fill="%23e74c3c" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M2 21l21-9-21-9v7l15 2-15 2z"/></svg>') no-repeat 0.7em center/1.2em 1.2em;
-      }
-      .custom-input:focus {
-        border-color: var(--accent-color);
-        box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.13);
-        outline: none;
-        background-color: #fff8f6;
-      }
-      .custom-btn {
-        background: linear-gradient(135deg, #e74c3c, #c0392b);
-        color: #fff;
-        border: none;
-        border-radius: 9px;
-        padding: 13px 0;
-        font-size: 1.07rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: background 0.3s, box-shadow 0.2s;
-        box-shadow: 0 2px 8px rgba(231, 76, 60, 0.09);
-        letter-spacing: 0.01em;
-      }
-      .custom-btn:hover, .custom-btn:focus {
-        background: linear-gradient(135deg, #c0392b, #e74c3c);
-        box-shadow: 0 4px 16px rgba(231, 76, 60, 0.13);
-        outline: 2px solid #c0392b;
-      }
-      .custom-btn:active {
-        transform: translateY(1px);
-      }
-      #customIdeaError {
-        color: #e74c3c;
-        font-size: 1rem;
-        margin-top: 0.6rem;
-        display: none;
-      }
-      #customItineraryResult {
-        margin-top: 1.5rem;
-        padding: 1rem;
-        background: #f8f9fa;
-        border-radius: 8px;
-        border-left: 4px solid var(--accent-color);
-        min-height: 50px;
-        white-space: pre-line;
-        font-size: 1.07rem;
-      }
-      /* Responsive Design */
-      @media (max-width: 1050px) {
-        .itinerary-columns {
-          flex-direction: column;
-          gap: 0;
-        }
-        .itinerary-standard,
-        .itinerary-custom {
-          min-width: 0;
-          width: 100%;
-          margin-bottom: 24px;
-        }
-      }
-      @media (max-width: 700px) {
-        .itinerary-columns {
-          flex-direction: column;
-          padding: 10px 0 !important;
-        }
-        .itinerary-standard,
-        .itinerary-custom {
-          padding: 18px 8px;
-          margin-bottom: 20px;
-          border-radius: 10px;
-        }
-        .custom-input {
-          font-size: 1rem;
-          padding: 13px 12px 13px 2.1em;
-        }
-        .custom-btn {
-          font-size: 1rem;
-          padding: 12px 0;
-        }
-      }
-      @media (max-width: 500px) {
-        .itinerary-custom h4,
-        .itinerary-standard h4 {
-          font-size: 1.1rem;
-        }
-        .custom-input {
-          font-size: 0.98rem;
-        }
-      }
     }
 
+    /* Add these new styles */
     .itinerary-section {
       background-color: #fdfcf9;
       padding: 2rem;
@@ -1711,90 +1572,80 @@
         <p>Simply tell us about your dream London trip below, and we'll do the rest! 🎯</p>
       </div>
       
-      <div class="container itinerary-columns" style="max-width: 1000px; margin: 0 auto; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; gap: 32px; flex-wrap: wrap;">
-        <!-- Standard Options Column -->
-        <div class="itinerary-standard" style="flex: 1 1 340px; min-width: 320px;">
-          <form id="itineraryForm">
-            <div class="form-group">
-              <label for="days">🗓️ How many days would you like to explore?</label>
-              <input type="number" id="days" min="1" max="14" required placeholder="Enter number of days (1-14)">
+      <div class="container" style="max-width: 800px; margin: 0 auto; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <form id="itineraryForm">
+          <div class="form-group">
+            <label for="days">🗓️ How many days would you like to explore?</label>
+            <input type="number" id="days" min="1" max="14" required placeholder="Enter number of days (1-14)">
+          </div>
+          
+          <div class="form-group">
+            <label for="visitType">👥 Who's joining this adventure?</label>
+            <select id="visitType" required>
+              <option value="">Choose your travel party...</option>
+              <option value="couple">💑 Romantic Couple</option>
+              <option value="friends">👫 Friends Group</option>
+              <option value="family">👨‍👩‍👧‍👦 Family with Kids</option>
+              <option value="senior">👴👵 Senior Couple</option>
+              <option value="solo">🚶‍♂️ Solo Traveler</option>
+              <option value="date">💖 Date Night</option>
+              <option value="group">👥 Large Group</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label>🎯 What interests you most about London?</label>
+            <div class="interests-container">
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="museums"> 🏛️ Museums
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="history"> 📚 History
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="art"> 🎨 Art
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="food"> 🍽️ Food
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="shopping"> 🛍️ Shopping
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="parks"> 🌳 Parks
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="nightlife"> 🌙 Nightlife
+              </label>
+              <label class="interest-checkbox">
+                <input type="checkbox" name="interests" value="music"> 🎵 Music
+              </label>
             </div>
-            <div class="form-group">
-              <label for="visitType">👥 Who's joining this adventure?</label>
-              <select id="visitType" required>
-                <option value="">Choose your travel party...</option>
-                <option value="couple">💑 Romantic Couple</option>
-                <option value="friends">👫 Friends Group</option>
-                <option value="family">👨‍👩‍👧‍👦 Family with Kids</option>
-                <option value="senior">👴👵 Senior Couple</option>
-                <option value="solo">🚶‍♂️ Solo Traveler</option>
-                <option value="date">💖 Date Night</option>
-                <option value="group">👥 Large Group</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>🎯 What interests you most about London?</label>
-              <div class="interests-container">
-                <label class="interest-checkbox">
-                  <input type="checkbox" name="interests" value="museums"> 🏛️ Museums
-                </label>
-                <label class="interest-checkbox">
-                  <input type="checkbox" name="interests" value="history"> 📚 History
-                </label>
-                <label class="interest-checkbox">
-                  <input type="checkbox" name="interests" value="art"> 🎨 Art
-                </label>
-                <label class="interest-checkbox">
-                  <input type="checkbox" name="interests" value="food"> 🍽️ Food
-                </label>
-                <label class="interest-checkbox">
-                  <input type="checkbox" name="interests" value="shopping"> 🛍️ Shopping
-                </label>
-                <label class="interest-checkbox">
-                  <input type="checkbox" name="interests" value="parks"> 🌳 Parks
-                </label>
-                <label class="interest-checkbox">
-                  <input type="checkbox" name="interests" value="nightlife"> 🌙 Nightlife
-                </label>
-                <label class="interest-checkbox">
-                  <input type="checkbox" name="interests" value="music"> 🎵 Music
-                </label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="budget">💰 What's your daily budget per person?</label>
-              <select id="budget" required>
-                <option value="">Select your preferred budget range...</option>
-                <option value="budget">🪙 Budget (£30-80/day) - Perfect for savvy travelers</option>
-                <option value="moderate">💷 Moderate (£80-150/day) - Balanced comfort & experiences</option>
-                <option value="premium">💎 Premium (£150-300/day) - Extra comfort & unique experiences</option>
-                <option value="luxury">👑 Luxury (£300+/day) - Ultimate London experience</option>
-              </select>
-            </div>
-            <button type="submit" class="generate-btn">
-              <span>🎨 Create My Perfect Itinerary</span>
-            </button>
-          </form>
-        </div>
-        <!-- Custom Idea Column -->
-        <div class="itinerary-custom" style="flex: 1 1 340px; min-width: 320px; background: #fff6f0; border-radius: 14px; padding: 24px 20px; box-shadow: 0 2px 8px rgba(231, 76, 60, 0.08);">
-          <h4 style="color: var(--accent-color); margin-top: 0;">✨ Describe Your Idea</h4>
-          <p style="margin-bottom: 0.5rem; color: #444; font-size: 1rem;">Have a unique request? Enter it here for a fully personalized itinerary (e.g., "suggest a 2 day date for Italian couple").</p>
-          <form id="customIdeaForm">
-            <input type="text" id="customIdeaInput" class="custom-input" placeholder="Describe your London trip idea..." style="margin-bottom: 10px; width: 100%;">
-            <button type="submit" class="custom-btn" style="width: 100%; margin-top: 0.5rem;">✨ Get My Custom Itinerary</button>
-          </form>
-          <div id="customIdeaError" class="error-message" style="margin-top: 8px;"></div>
-        </div>
-        <!-- Results and Loading are shared below columns -->
-        <div style="flex-basis: 100%;"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="budget">💰 What's your daily budget per person?</label>
+            <select id="budget" required>
+              <option value="">Select your preferred budget range...</option>
+              <option value="budget">🪙 Budget (£30-80/day) - Perfect for savvy travelers</option>
+              <option value="moderate">💷 Moderate (£80-150/day) - Balanced comfort & experiences</option>
+              <option value="premium">💎 Premium (£150-300/day) - Extra comfort & unique experiences</option>
+              <option value="luxury">👑 Luxury (£300+/day) - Ultimate London experience</option>
+            </select>
+          </div>
+          
+          <button type="submit" class="generate-btn">
+            <span>🎨 Create My Perfect Itinerary</span>
+          </button>
+        </form>
+        
         <div id="loadingSpinner">
           <div class="spinner"></div>
           <p>✨ Crafting your personalized London adventure...</p>
         </div>
+        
         <div id="errorMessage" class="error-message"></div>
         <div id="itineraryResult"></div>
-        <div id="customItineraryResult"></div>
       </div>
     </section>
 
@@ -2715,121 +2566,6 @@
 
     // Itinerary Generator Code
     document.getElementById('itineraryForm').addEventListener('submit', async function(e) {
-      document.getElementById('customItineraryResult').style.display = 'none';
-    });
-
-    // Custom Idea Form Handler
-    document.getElementById('customIdeaForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const loadingSpinner = document.getElementById('loadingSpinner');
-      const customError = document.getElementById('customIdeaError');
-      const customResult = document.getElementById('customItineraryResult');
-      customError.style.display = 'none';
-      customResult.style.display = 'none';
-      loadingSpinner.style.display = 'block';
-      customError.textContent = '';
-      const customIdea = document.getElementById('customIdeaInput').value.trim();
-      if (!customIdea) {
-        customError.textContent = 'Please describe your idea.';
-        customError.style.display = 'block';
-        loadingSpinner.style.display = 'none';
-        return;
-      }
-      try {
-        // Custom prompt for Gemini
-        const prompt = `You are a London travel expert assistant. The user has asked for: "${customIdea}".\n\nPlease provide a detailed, personalized response that addresses their specific request.\n\nFocus ONLY on the keywords and ideas mentioned in their query, without considering days, travel party, or other interests.\n\nIf they're asking for a date idea or itinerary, include specific venues, timing suggestions, and tips to make it special.\n\nFormat your response in a friendly, conversational way with emoji and clear sections. Use the same structure as the regular itinerary responses.`;
-        const API_KEY = 'AIzaSyCoIfWdcyG-R41MIaB7HT4mOSo8kuv6gNI';
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${API_KEY}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{
-                text: prompt
-              }]
-            }]
-          })
-        });
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error('API Error:', errorData);
-          throw new Error(`API error: ${errorData.error?.message || 'Unknown error'}`);
-        }
-        const data = await response.json();
-        if (data.candidates && data.candidates[0].content) {
-          let generatedItinerary = data.candidates[0].content.parts[0].text;
-          generatedItinerary = generatedItinerary
-            .replace(/\*+/g, '')
-            .replace(/#{1,6}\s+/g, '')
-            .trim();
-          // Try to extract and format overview and days if present
-          let overviewSection = '';
-          const overviewMatch = generatedItinerary.match(/^(.*?)(?=Day 1:|DAY 1:)/is);
-          if (overviewMatch && overviewMatch[1].trim()) {
-            const overviewText = overviewMatch[1].trim();
-            overviewSection = `
-              <div class="overview-section">
-                <h3>Trip Overview</h3>
-                ${formatOverviewContent(overviewText)}
-              </div>
-            `;
-            generatedItinerary = generatedItinerary.replace(overviewMatch[0], '');
-          }
-          let formattedDays = '';
-          const dayPattern = /Day (\d+):|DAY (\d+):|Day (\d+) -|DAY (\d+) -/gi;
-          let dayMatches = [];
-          let match;
-          while ((match = dayPattern.exec(generatedItinerary)) !== null) {
-            dayMatches.push({
-              index: match.index,
-              day: match[1] || match[2] || match[3] || match[4],
-              fullMatch: match[0]
-            });
-          }
-          for (let i = 0; i < dayMatches.length; i++) {
-            const currentMatch = dayMatches[i];
-            const nextMatch = dayMatches[i + 1];
-            let endIndex = nextMatch ? nextMatch.index : generatedItinerary.length;
-            let dayContent = generatedItinerary.substring(
-              currentMatch.index + currentMatch.fullMatch.length,
-              endIndex
-            ).trim();
-            formattedDays += formatDayContent(currentMatch.day, dayContent);
-          }
-          // If no days found, just show the text
-          let finalHTML = '';
-          if (formattedDays) {
-            finalHTML = `
-              <div class="itinerary-container">
-                <div class="itinerary-header">
-                  <h2>Personalized London Itinerary</h2>
-                </div>
-                ${overviewSection}
-                ${formattedDays}
-                <div style="text-align: center; margin-top: 30px;">
-                  <a href="javascript:window.print()" class="print-btn">Print Itinerary</a>
-                </div>
-              </div>
-            `;
-          } else {
-            finalHTML = `<div class="itinerary-container"><div class="itinerary-header"><h2>Personalized London Itinerary</h2></div><div>${generatedItinerary}</div></div>`;
-          }
-          customResult.innerHTML = finalHTML;
-          customResult.style.display = 'block';
-        } else {
-          throw new Error('No itinerary generated');
-        }
-      } catch (error) {
-        console.error('Error details:', error);
-        customError.textContent = `Error: ${error.message || 'Failed to generate itinerary. Please try again.'}`;
-        customError.style.display = 'block';
-      } finally {
-        loadingSpinner.style.display = 'none';
-      }
-    });
-
       e.preventDefault();
       const loadingSpinner = document.getElementById('loadingSpinner');
       const errorMessage = document.getElementById('errorMessage');
